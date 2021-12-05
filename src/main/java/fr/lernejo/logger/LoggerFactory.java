@@ -1,10 +1,16 @@
 package fr.lernejo.logger;
 
+import org.jetbrains.annotations.NotNull;
+
 public class LoggerFactory {
 
-    @org.jetbrains.annotations.NotNull
-    @org.jetbrains.annotations.Contract(value = "_ -> new", pure = true)
-    public static Logger getLogger(String name){
-        return new ConsoleLogger();
+    public static @NotNull Logger getLogger(Class<?> callerClass, String name) {
+        return new ContextualLogger(callerClass, new CompositeLogger(
+            new ConsoleLogger(),
+            new FilteredLogger(
+                new FileLogger(System.getProperty("user.home") + "/Desktop/file.txt"),
+                s -> s.contains("Simulation")
+            )
+        ));
     }
 }
