@@ -10,14 +10,14 @@ public class Simulation {
 
     private final Logger logger = LoggerFactory.getLogger("Simulation");
     private final Player player;
-    private Long numberToGuess;
+    private long numberToGuess;
 
     public Simulation(Player player) {
         this.player=player;
     }
 
     public void initialize(long numberToGuess) {
-
+        this.numberToGuess = numberToGuess;
     }
 
     /**
