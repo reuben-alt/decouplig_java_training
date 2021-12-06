@@ -29,10 +29,10 @@ public class Simulation {
         if (guess == numberToGuess)
             return true;
         if (guess > numberToGuess) {
-            logger.log("C'est moins");
+            logger.log("C'est plus petit");
             player.respond(false);
         }else{
-            logger.log("C'est plus");
+            logger.log("C'est plus grand");
             player.respond(true);
         }
 
