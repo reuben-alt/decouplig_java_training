@@ -11,7 +11,7 @@ public class ComputerPlayer implements Player{
         if (lastGuess == null) {
             lastGuess = new SecureRandom().nextLong(0, Long.MAX_VALUE);
         }
-        lastGuess = response ? lastGuess * 2 : lastGuess / 2; // FIXME
+        lastGuess = response ? lastGuess * 2 : lastGuess / 2;
         return lastGuess;
     }
 

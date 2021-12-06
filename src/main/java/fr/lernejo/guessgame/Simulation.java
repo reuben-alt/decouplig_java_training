@@ -3,11 +3,12 @@ package fr.lernejo.guessgame;
 import fr.lernejo.logger.Logger;
 import fr.lernejo.logger.LoggerFactory;
 
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Simulation {
 
-    private final Logger logger = LoggerFactory.getLogger("simulation");
+    private final Logger logger = LoggerFactory.getLogger("Simulation");
     private final Player player;
     private Long numberToGuess;
 
@@ -23,24 +24,32 @@ public class Simulation {
      * @return true if the player have guessed the right number
      */
     private boolean nextRound() {
-        System.out.println("Devinez le nombre: ");
+        System.out.println("Devinez le nombre : ");
         long guess = player.askNextGuess();
         if (guess == numberToGuess)
             return true;
         if (guess > numberToGuess) {
-            logger.log("c'est moins");
+            logger.log("C'est moins");
             player.respond(false);
         }else{
-            logger.log("c'est plus");
+            logger.log("C'est plus");
             player.respond(true);
         }
 
         return false;
     }
 
-    public void loopUntilPlayerSucceed() {
-        while (!nextRound()) {
-            nextRound();
+    public void loopUntilPlayerSucceed(long maximumLoops) {
+        boolean won = false;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < maximumLoops; i++) {
+            if (nextRound()) {
+                won = true;
+                break;
+            }
         }
+        long eLapsedTime = System.currentTimeMillis() - start;
+        logger.log(won ? "Bravo!" : "Fini, vous avez perdu");
+        logger.log("Temps total : "  + new SimpleDateFormat("mm:ss:SSS").format(new Date(eLapsedTime)));
     }
 }
